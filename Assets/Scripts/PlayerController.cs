@@ -1,12 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Zenject;
 using Assets;
-using ModestTree;
 using System;
-using System.Threading.Tasks;
 using System.Linq;
 
 public class PlayerController : MonoBehaviour

@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UIElements;
 
 public class RigidBodyLagCompensation : MonoBehaviourPun, IPunObservable
 {
     private Rigidbody2D rigidbody;
-    private Vector2 bulletsPosition = new Vector2(10f, 10f);
 
     private void Awake()
     {
@@ -38,11 +34,4 @@ public class RigidBodyLagCompensation : MonoBehaviourPun, IPunObservable
 
     }
 
-    private void FixedUpdate()
-    {
-        /*if(Vector2.Distance(rigidbody.position, bulletsPosition) > 3)
-        {
-            rigidbody.position
-        }*/
-    }
 }

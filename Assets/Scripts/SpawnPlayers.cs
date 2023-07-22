@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Assets.Scripts;
-using Zenject;
-using WebSocketSharp;
-using System.Linq;
 
 public class SpawnPlayers : MonoBehaviour
 {

@@ -1,17 +1,11 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletLagCompensation : MonoBehaviour, IPunObservable
 {
     [SerializeField] Rigidbody2D rigidbody;
 
-    //private Rigidbody2D rigidbody;
-    private Vector2 bulletsPosition = new Vector2(10f, 10f);
-
     private PhotonView photonView;
-
     private Vector2 networkPosition;
 
     private void Awake()
