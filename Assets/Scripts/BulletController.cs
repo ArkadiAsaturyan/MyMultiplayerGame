@@ -52,8 +52,6 @@ public class BulletController : MonoBehaviour, IPunObservable
         else
         {
             sprite.enabled = false;
-            Debug.Log("bullet.SetActive(false);");
-
         }
     }
 
