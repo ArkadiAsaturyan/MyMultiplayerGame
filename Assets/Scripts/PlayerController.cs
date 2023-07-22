@@ -138,7 +138,6 @@ public class PlayerController : MonoBehaviour
 
         else if (collision.gameObject.tag == "Coin")
         {
-            Debug.Log("Is Coin");
             AddPoint();
         }
     }
