@@ -17,12 +17,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 healthBarOffset;
     [SerializeField] private PhotonView photonView;
 
-    private Color[] colors = { Color.white, Color.magenta, Color.red, Color.black, Color.yellow };
+    private Color[] colors = { Color.green, Color.red, Color.magenta, Color.yellow, Color.black, Color.white };
     private JoystickController _joystickController2;
     private ShootController _shootController;
     private Vector2 playerDirection = Vector2.zero;
     public Vector2 PlayerDirection => playerDirection;
-    private HealthBar healthManager;
+    private HealthBar healthBar;
 
     public event Action<PlayerController> OnPlayerDestroyed;
     private string name;
@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
         {
             GameObject healthBarGameObject = PhotonNetwork.Instantiate(healthBarPrefab.gameObject.name,
                 transform.position + healthBarOffset, Quaternion.identity);
-            healthManager = healthBarGameObject.GetComponent<HealthBar>();
-            healthManager.Initialize(transform);
+            healthBar = healthBarGameObject.GetComponent<HealthBar>();
+            healthBar.Initialize(transform);
         }
     }
 
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.color = colors[colorConfig.PlayerIndex];
         colorConfig.IncrementPlayerIndex();
 
-        if (healthManager == null)
+        if (healthBar == null)
         {
             StartCoroutine(FindHealthBar());
         }
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator FindHealthBar()
     {
-        while (healthManager == null)
+        while (healthBar == null)
         {
             var healthBarPhotonView = PhotonNetwork.PhotonViews
                 .Where(v => v.CreatorActorNr == photonView.CreatorActorNr 
@@ -69,9 +69,9 @@ public class PlayerController : MonoBehaviour
 
             if (healthBarPhotonView != null)
             {
-                healthManager = healthBarPhotonView.GetComponent<HealthBar>();
+                healthBar = healthBarPhotonView.GetComponent<HealthBar>();
             }
-            yield return healthManager;
+            yield return healthBar;
         }
     }
 
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
             }
             if (photonView.IsMine)
             {
-                healthManager.SetHealth();
+                healthBar.SetHealth();
             }
 
             health -= 10;
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
             if (health <= 0 && photonView.IsMine)
             {
                 PhotonNetwork.Destroy(gameObject);
-                PhotonNetwork.Destroy(healthManager.gameObject);
+                PhotonNetwork.Destroy(healthBar.gameObject);
             }
         }
 
