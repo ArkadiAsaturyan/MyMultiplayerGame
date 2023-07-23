@@ -8,8 +8,10 @@ public class Coin : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public event Action<Collider2D> OnCoinCollected;
+    public event Action<GameObject> OnDestroyCoin;
 
-    
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,6 +23,7 @@ public class Coin : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             OnCoinCollected(collision);
+            OnDestroyCoin(gameObject);
             gameObject.SetActive(false);         
 
         }

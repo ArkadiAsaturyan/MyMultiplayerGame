@@ -50,18 +50,18 @@ public class CoinSpawner : MonoBehaviour
         }
     }
 
-    private void DestroyCoin(Collider2D collision)
+    private void DestroyCoin(GameObject coin)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(DestroyCoinWithDelay());
+            StartCoroutine(DestroyCoinWithDelay(coin));
         }
     }
 
-    private IEnumerator DestroyCoinWithDelay()
+    private IEnumerator DestroyCoinWithDelay(GameObject coin)
     {
         yield return new WaitForSeconds(1);
-        PhotonNetwork.Destroy(gameObject);
+        PhotonNetwork.Destroy(coin);
         Debug.Log("Destroy coin");
     }
 
@@ -73,7 +73,7 @@ public class CoinSpawner : MonoBehaviour
             GameObject coinGameObject = PhotonNetwork.Instantiate(coinPrefab.name, randomPosition, Quaternion.identity);
             Coin coin = coinGameObject.GetComponent<Coin>();
             coin.OnCoinCollected += coinBar.CoinCollected;
-            coin.OnCoinCollected += DestroyCoin;
+            coin.OnDestroyCoin += DestroyCoin;
         }
     }
 
