@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ColorConfig colorConfig;
     [SerializeField] private int health;
     [SerializeField] private float bulletOfset;
-    [SerializeField] private Health healthBarPrefab;
+    [SerializeField] private HealthBar healthBarPrefab;
     [SerializeField] private Vector3 healthBarOffset;
 
     public event Action<PlayerController> OnPlayerDestroyed;
@@ -28,13 +28,13 @@ public class PlayerController : MonoBehaviour
         collectedCoins++;
     }
 
-    private Color[] colors = {Color.white, Color.magenta, Color.red, Color.black, Color.yellow};
+    private Color[] colors = { Color.white, Color.magenta, Color.red, Color.black, Color.yellow };
     private JoystickController2 _joystickController2;
     private Shoot _shoot;
     private PhotonView photonView;
     private Vector2 playerDirection = Vector2.zero;
     public Vector2 PlayerDirection => playerDirection;
-    private Health healthManager;
+    private HealthBar healthManager;
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         if (photonView.IsMine)
         {
             GameObject healthBarGameObject = PhotonNetwork.Instantiate(healthBarPrefab.gameObject.name, transform.position + healthBarOffset, Quaternion.identity);
-            healthManager = healthBarGameObject.GetComponent<Health>();
+            healthManager = healthBarGameObject.GetComponent<HealthBar>();
             healthManager.Initialize(transform);
         }
 
@@ -53,12 +53,12 @@ public class PlayerController : MonoBehaviour
         while (healthManager == null)
         {
             var healthBarPhotonView = PhotonNetwork.PhotonViews
-                .Where(v => v.CreatorActorNr == photonView.CreatorActorNr && v.TryGetComponent<Health>(out Health health)).FirstOrDefault();
-           
+                .Where(v => v.CreatorActorNr == photonView.CreatorActorNr && v.TryGetComponent<HealthBar>(out HealthBar health)).FirstOrDefault();
+
 
             if (healthBarPhotonView != null)
             {
-                healthManager = healthBarPhotonView.GetComponent<Health>();
+                healthManager = healthBarPhotonView.GetComponent<HealthBar>();
             }
             yield return healthManager;
         }
@@ -79,18 +79,18 @@ public class PlayerController : MonoBehaviour
 
     public void Initialize(JoystickController2 joystickController2, Shoot shoot)
     {
-        
+
         StartCoroutine(FreezePLayerWhenAlone(joystickController2, shoot));
     }
 
-    
+
 
     void Start()
     {
         spriteRenderer.color = colors[colorConfig.PlayerIndex];
         colorConfig.IncrementPlayerIndex();
 
-        
+
 
         /*GameObject joystick = GameObject.FindWithTag("JoystickBG");
         joystickController2 = joystick.GetComponent<JoystickController2>();
@@ -111,13 +111,21 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            if(collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner)
+            if (collision.gameObject.GetComponent<BulletController>().IsInactive)
+            {
+                Debug.Log("bullet is inactive");
+                return;
+            }
+
+            if (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner)
             {
                 Debug.Log("bullet is yours");
                 return;
             }
-
-            healthManager.SetHealth();            
+            if (photonView.IsMine)
+            {
+                healthManager.SetHealth();
+            }
 
             health -= 10;
             Debug.Log("health: " + health);
@@ -125,7 +133,7 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 Debug.Log("health <=0: " + health);
-                
+
                 if (photonView.IsMine)
                 {
                     Debug.Log("IS mine. can destroy");
@@ -138,14 +146,14 @@ public class PlayerController : MonoBehaviour
 
         else if (collision.gameObject.tag == "Coin")
         {
-            
+
             AddPoint();
             Debug.Log($"{photonView.Owner.NickName}'s coins: {collectedCoins}");
         }
     }
 
-      
-    
+
+
 
     private void Shoot()
     {
@@ -166,13 +174,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+
 
     private IEnumerator HideBullet(GameObject bullet)
     {
         yield return new WaitForSeconds(3);
 
-        if(bullet != null)
+        if (bullet != null)
         {
             PhotonNetwork.Destroy(bullet);
 
@@ -183,9 +191,9 @@ public class PlayerController : MonoBehaviour
     {
         playerDirection = _joystickController2.InputDirection;
         float angle = Vector2.Angle(Vector2.right, _joystickController2.InputDirection);
-        transform.rotation = new Quaternion(0,0,angle,0);
+        transform.rotation = new Quaternion(0, 0, angle, 0);
 
-        
+
 
         if (_joystickController2.InputDirection.y < 0)
         {
@@ -210,17 +218,17 @@ public class PlayerController : MonoBehaviour
     public void Move()
     {
 
-        if (_joystickController2 != null && _joystickController2.InputDirection != Vector2.zero) 
+        if (_joystickController2 != null && _joystickController2.InputDirection != Vector2.zero)
         {
             RotatePlayer();
-            if((transform.position.y < -4.1f && _joystickController2.InputDirection.y < 0) 
-                || (transform.position.y > 4.1f && _joystickController2.InputDirection.y > 0) 
-                || (transform.position.x < -7.6f && _joystickController2.InputDirection.x < 0) 
+            if ((transform.position.y < -4.1f && _joystickController2.InputDirection.y < 0)
+                || (transform.position.y > 4.1f && _joystickController2.InputDirection.y > 0)
+                || (transform.position.x < -7.6f && _joystickController2.InputDirection.x < 0)
                 || (transform.position.x > 7.6f && _joystickController2.InputDirection.x > 0))
             {
                 return;
             }
-            
+
             transform.position += new Vector3(_joystickController2.InputDirection.x, _joystickController2.InputDirection.y, 0) * (m_Speed * Time.deltaTime);
             //playerDirection = _joystickController2.InputDirection;
         }
@@ -230,9 +238,9 @@ public class PlayerController : MonoBehaviour
     {
         if (photonView.IsMine)
         {
-            Move();         
+            Move();
         }
-        
+
     }
 
     private void OnDestroy()

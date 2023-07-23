@@ -86,9 +86,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3259168016356855024}
   - component: {fileID: 1529413050863737649}
-  - component: {fileID: 7409249936614854181}
   - component: {fileID: 4185659679239420914}
   - component: {fileID: 490587460165514384}
+  - component: {fileID: 7130099079794900372}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -140,22 +140,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
---- !u!114 &7409249936614854181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3172597115974925742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e50d8f435d48cb4b8e5eb3632ab91a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 2763380385953404501}
-  healthText: {fileID: 4600300279347084369}
-  healthBarOffset: {x: 0, y: 0.7, z: 0}
-  rectTransform: {fileID: 3259168016356855024}
 --- !u!114 &4185659679239420914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +160,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 490587460165514384}
+  - {fileID: 7130099079794900372}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -212,6 +197,23 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &7130099079794900372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172597115974925742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090e3718c6c10b349add0bf461433794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 2763380385953404501}
+  healthText: {fileID: 4600300279347084369}
+  healthBarOffset: {x: 0, y: -0.7, z: 0}
+  rectTransform: {fileID: 3259168016356855024}
+  photonView: {fileID: 4185659679239420914}
 --- !u!1 &4827082747953179039
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class BulletController : MonoBehaviour, IPunObservable
 
     private PhotonView photonView;
     private Vector2 bulletsPosition = new Vector2(10f, 10f);
+    private bool isInactive;
+    public bool IsInactive => isInactive;
 
 
     private void Awake()
@@ -28,9 +30,12 @@ public class BulletController : MonoBehaviour, IPunObservable
         PhotonNetwork.Destroy(gameObject);
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Bullet" || collision.tag == "Coin" 
+        Debug.Log("bullet trigger detected");
+
+        if (collision.tag == "Bullet" || collision.tag == "Coin" 
             || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
         {
             return;
@@ -42,16 +47,21 @@ public class BulletController : MonoBehaviour, IPunObservable
             /*transform.position = bulletsPosition;
             gameObject.SetActive(false);*/
 
-            sprite.enabled = false;
             StartCoroutine(DestroyBullet());
         }
+        sprite.enabled = false;
 
-        else
-        {
-            sprite.enabled = false;
-        }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Bullet" || collision.tag == "Coin"
+            || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
+        {
+            return;
+        }
+        isInactive = true;
+    }
 
     public void Shoot(Vector2 direction)
     {

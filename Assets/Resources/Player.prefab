@@ -107,7 +107,7 @@ MonoBehaviour:
   colorConfig: {fileID: 11400000, guid: 102ce25627b9b0e43b0dcd6dcdf54bd7, type: 2}
   health: 500
   bulletOfset: 0.17
-  healthBarPrefab: {fileID: 7409249936614854181, guid: bb9a3a763b4411a4a91859d01d58f9ea, type: 3}
+  healthBarPrefab: {fileID: 7130099079794900372, guid: bb9a3a763b4411a4a91859d01d58f9ea, type: 3}
   healthBarOffset: {x: 0, y: -0.7, z: 0}
 --- !u!50 &-6268492793624952750
 Rigidbody2D:
