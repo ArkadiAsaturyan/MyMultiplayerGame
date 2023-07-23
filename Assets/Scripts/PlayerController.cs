@@ -20,12 +20,12 @@ public class PlayerController : MonoBehaviour
     private string name;
     public string Name => name;
 
-    private int points;
-    public int Points => points;
+    private int collectedCoins;
+    public int CollectedCoins => collectedCoins;
 
-    public void AddPoint()
+    private void AddPoint()
     {
-        points++;
+        collectedCoins++;
     }
 
     private Color[] colors = {Color.white, Color.magenta, Color.red, Color.black, Color.yellow};
@@ -134,7 +134,9 @@ public class PlayerController : MonoBehaviour
 
         else if (collision.gameObject.tag == "Coin")
         {
+            
             AddPoint();
+            Debug.Log($"{photonView.Owner.NickName}'s coins: {collectedCoins}");
         }
     }
 
@@ -148,7 +150,6 @@ public class PlayerController : MonoBehaviour
             Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y);
 
             playerDirection = playerDirection.normalized;
-
             GameObject bulletGameObject = PhotonNetwork.Instantiate(bulletPrefab.name, playerPosition + playerDirection * bulletOfset, Quaternion.identity);
             //bullet.transform.position = playerPosition + playerDirection * 0.45f;
 
@@ -176,6 +177,7 @@ public class PlayerController : MonoBehaviour
 
     private void RotatePlayer()
     {
+        playerDirection = _joystickController2.InputDirection;
         float angle = Vector2.Angle(Vector2.right, _joystickController2.InputDirection);
         transform.rotation = new Quaternion(0,0,angle,0);
 
@@ -197,7 +199,6 @@ public class PlayerController : MonoBehaviour
                     transform.eulerAngles.y,
                     angle
                 );
-        playerDirection = _joystickController2.InputDirection;
 
 
     }
@@ -217,7 +218,7 @@ public class PlayerController : MonoBehaviour
             }
             
             transform.position += new Vector3(_joystickController2.InputDirection.x, _joystickController2.InputDirection.y, 0) * (m_Speed * Time.deltaTime);
-            playerDirection = _joystickController2.InputDirection;
+            //playerDirection = _joystickController2.InputDirection;
         }
     }
 

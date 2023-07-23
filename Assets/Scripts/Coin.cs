@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Coin : MonoBehaviour
@@ -8,6 +9,12 @@ public class Coin : MonoBehaviour
 
     public event Action<Collider2D> OnCoinCollected;
 
+    private IEnumerator DestroyCoinWithDelay()
+    {
+        yield return new WaitForSeconds(1);
+        PhotonNetwork.Destroy(gameObject);
+        Debug.Log("Destroy coin");
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,12 +26,12 @@ public class Coin : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             OnCoinCollected(collision);
-            spriteRenderer.enabled = false;
-            if (PhotonNetwork.IsMasterClient)
+            //spriteRenderer.enabled = false;
+            gameObject.SetActive(false);
+            /*if (PhotonNetwork.IsMasterClient)
             {
-                Debug.Log("Destroy coin");
-                PhotonNetwork.Destroy(gameObject);
-            }
+                StartCoroutine(DestroyCoinWithDelay());
+            }*/
             
         }
     }

@@ -25,8 +25,8 @@ public class PopupManager : MonoBehaviour
         if(players.Count == 1)
         {
             winnerPopup.gameObject.SetActive(true);
-            winnerPopup.Setup(players[0].Name, players[0].Points);
-            Debug.Log("Winner points: " + players[0].Points);
+            winnerPopup.Setup(players[0].Name, players[0].CollectedCoins);
+            Debug.Log("Winner points: " + players[0].CollectedCoins);
             Debug.Log("player.Name: " + players[0].Name);
             
         }

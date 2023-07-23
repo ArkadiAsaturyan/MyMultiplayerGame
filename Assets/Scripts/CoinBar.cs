@@ -7,13 +7,14 @@ public class CoinBar : MonoBehaviour
 {
     [SerializeField] private Image progress;
     [SerializeField] private TextMeshProUGUI collectedCoinsTexr;
-    [SerializeField] private int coinsAmount;
+    [SerializeField] private float coinsAmount;
 
     private float oneCoinProgress;
 
     private void Start()
     {
-        oneCoinProgress = 1 / coinsAmount;
+        oneCoinProgress = 1f / coinsAmount;
+        Debug.Log("oneCoinProgress: " + oneCoinProgress);
     }
 
     private int collectedCoins;
@@ -23,7 +24,7 @@ public class CoinBar : MonoBehaviour
         {
             collectedCoins++;
             collectedCoinsTexr.text = $"{collectedCoins}";
-            progress.fillAmount += 0.1f;
+            progress.fillAmount += oneCoinProgress;
         }
     }
 }
