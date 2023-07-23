@@ -13,13 +13,13 @@ public class BulletController : MonoBehaviour, IPunObservable
     [SerializeField] private float speed;
     [SerializeField] private SpriteRenderer sprite;
 
-    private PhotonView view;
+    private PhotonView photonView;
     private Vector2 bulletsPosition = new Vector2(10f, 10f);
 
 
     private void Awake()
     {
-        view = GetComponent<PhotonView>();
+        photonView = GetComponent<PhotonView>();
     }
 
     private IEnumerator DestroyBullet()
@@ -30,12 +30,13 @@ public class BulletController : MonoBehaviour, IPunObservable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Bullet" || collision.tag == "Coin")
+        if(collision.tag == "Bullet" || collision.tag == "Coin" 
+            || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
         {
             return;
         }
 
-        if (view.IsMine)
+        if (photonView.IsMine)
         {
 
             /*transform.position = bulletsPosition;

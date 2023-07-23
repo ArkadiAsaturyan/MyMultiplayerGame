@@ -111,9 +111,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
+            if(collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner)
+            {
+                Debug.Log("bullet is yours");
+                return;
+            }
 
-            healthManager.SetHealth();
-            
+            healthManager.SetHealth();            
 
             health -= 10;
             Debug.Log("health: " + health);
