@@ -7,7 +7,6 @@ public class HealthBar : MonoBehaviour, IPunObservable
 {
     [SerializeField] private Image healthBar;
     [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private Vector3 healthBarOffset;
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private PhotonView photonView;
 
@@ -46,31 +45,23 @@ public class HealthBar : MonoBehaviour, IPunObservable
     public void SetHealthForOpponent()
     {
         float differenceInPercent = (previousHealth - currentHealth) / startingHealth;
-        Debug.Log("differenceInPercent: " + differenceInPercent);
-
         healthBar.fillAmount -= differenceInPercent;
         healthText.text = $"{currentHealth}";
         previousHealth = currentHealth;
-
     }
 
     public void SetHealth()
     {
-
         healthBar.fillAmount -= 0.02f;
         currentHealth -= 10;
         healthText.text = $"{currentHealth}";
-
     }
 
     private void Update()
     {
         if(healthTarget != null)
         {
-
             healthTransform.position = healthTarget.position;
         }
     }
-
-
 }

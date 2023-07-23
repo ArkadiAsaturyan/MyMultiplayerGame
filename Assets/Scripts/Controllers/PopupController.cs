@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
-public class PopupManager : MonoBehaviour
+public class PopupController : MonoBehaviour
 {
     [SerializeField] private WinnerPopup winnerPopup;
 
@@ -13,8 +12,6 @@ public class PopupManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("awake in popupManager");
-
         StartCoroutine(CheckPhotonViews());
     }
 
@@ -25,17 +22,12 @@ public class PopupManager : MonoBehaviour
         if(players.Count == 1)
         {
             winnerPopup.gameObject.SetActive(true);
-            winnerPopup.Setup(players[0].Name, players[0].CollectedCoins);
-            Debug.Log("Winner points: " + players[0].CollectedCoins);
-            Debug.Log("player.Name: " + players[0].Name);
-            
+            winnerPopup.Setup(players[0].Name, players[0].CollectedCoins);            
         }
     }
     
     private IEnumerator CheckPhotonViews()
     {
-        Debug.Log("CheckPhotonViews");
-
         while (true)
         {
             yield return new WaitForSeconds(1);
@@ -46,8 +38,6 @@ public class PopupManager : MonoBehaviour
 
             if (players.Count >= playersCount + 1)
             {
-                Debug.Log("players.Count: " + players.Count);
-
                 players[playersCount].OnPlayerDestroyed += PlayerDestroyed;
                 playersCount++;
             }

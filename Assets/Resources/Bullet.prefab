@@ -160,7 +160,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 5809450270382527925}
   - {fileID: -1784926829045954581}
   sceneViewId: 0
   InstantiationId: 0

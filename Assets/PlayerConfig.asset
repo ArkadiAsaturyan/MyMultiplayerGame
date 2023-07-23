@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8a265c6e6d7c8243aee54b4b3c314c0, type: 3}
-  m_Name: Color
+  m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   playerIndex: 0

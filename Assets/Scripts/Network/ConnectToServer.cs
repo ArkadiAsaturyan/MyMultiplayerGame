@@ -5,7 +5,6 @@ namespace Assets
 {
     public class ConnectToServer : MonoBehaviourPunCallbacks
     {
-
         private void Start()
         {
             PhotonNetwork.ConnectUsingSettings();

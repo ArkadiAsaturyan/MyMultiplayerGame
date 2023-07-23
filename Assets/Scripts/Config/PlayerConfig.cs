@@ -2,8 +2,9 @@
 
 namespace Assets
 {
-    [CreateAssetMenu(fileName = "Color", menuName = "Configs/Color", order = 100)]
-    public class ColorConfig : ScriptableObject 
+    [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Configs/PlayerConfig", order = 100)]
+
+    public class PlayerConfig : ScriptableObject 
     {
         [SerializeField] private int playerIndex;
 
@@ -18,6 +19,5 @@ namespace Assets
         {
             playerIndex++;
         }
-
     }
 }

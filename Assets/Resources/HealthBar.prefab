@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1529413050863737649}
   - component: {fileID: 4185659679239420914}
   - component: {fileID: 490587460165514384}
-  - component: {fileID: 7130099079794900372}
+  - component: {fileID: 5553751570603638011}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -160,7 +160,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 490587460165514384}
-  - {fileID: 7130099079794900372}
+  - {fileID: 5553751570603638011}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &7130099079794900372
+--- !u!114 &5553751570603638011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,12 +206,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3172597115974925742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 090e3718c6c10b349add0bf461433794, type: 3}
+  m_Script: {fileID: 11500000, guid: 353bea4209a699745bcf4ada5cfe18e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2763380385953404501}
   healthText: {fileID: 4600300279347084369}
-  healthBarOffset: {x: 0, y: -0.7, z: 0}
   rectTransform: {fileID: 3259168016356855024}
   photonView: {fileID: 4185659679239420914}
 --- !u!1 &4827082747953179039
@@ -361,7 +360,7 @@ GameObject:
   - component: {fileID: 154641600754125268}
   - component: {fileID: 2763380385953404501}
   m_Layer: 5
-  m_Name: Forground
+  m_Name: Progress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,11 +11,15 @@ namespace Assets
         [SerializeField] private TMP_InputField nameInputField;
         [SerializeField] private TMP_InputField createInputField;
         [SerializeField] private TMP_InputField joinInputField;
-        [SerializeField] private Button CreateButton;
-        [SerializeField] private Button JoinButton;
+        [SerializeField] private Button createButton;
+        [SerializeField] private Button joinButton;
 
-        
-       
+        private void Start()
+        {
+            createButton.onClick.AddListener(CreateRoom);
+            joinButton.onClick.AddListener(JoinRoom);
+        }
+
         public void CreateRoom()
         {
             if(nameInputField.text == "" || createInputField.text == "")
@@ -38,8 +42,6 @@ namespace Assets
         {
             PhotonNetwork.NickName = nameInputField.text;
             PhotonNetwork.LoadLevel("Game");
-
-        }
-         
+        }         
     }
 }

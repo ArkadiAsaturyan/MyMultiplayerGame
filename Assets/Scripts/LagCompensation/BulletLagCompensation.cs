@@ -12,13 +12,11 @@ public class BulletLagCompensation : MonoBehaviour, IPunObservable
     {
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 30;
-
         photonView = GetComponent<PhotonView>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
         if (stream.IsWriting)
         {
             stream.SendNext(rigidbody.position);
@@ -30,9 +28,8 @@ public class BulletLagCompensation : MonoBehaviour, IPunObservable
             rigidbody.velocity = (Vector2)stream.ReceiveNext();
 
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-           networkPosition += rigidbody.velocity * lag;
+            networkPosition += rigidbody.velocity * lag;
         }
-
     }
 
     public void FixedUpdate()
@@ -42,5 +39,4 @@ public class BulletLagCompensation : MonoBehaviour, IPunObservable
             rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
         }
     }
-
 }

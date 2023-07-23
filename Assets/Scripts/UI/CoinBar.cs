@@ -14,7 +14,6 @@ public class CoinBar : MonoBehaviour
     private void Start()
     {
         oneCoinProgress = 1f / coinsAmount;
-        Debug.Log("oneCoinProgress: " + oneCoinProgress);
     }
 
     private int collectedCoins;

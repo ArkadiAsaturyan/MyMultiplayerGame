@@ -30,23 +30,17 @@ public class CoinSpawner : MonoBehaviour
         }
     }
 
-
     private IEnumerator SubscribeEventForNonMasterClientCoroutine()
     {
         while (coins.Count != coinsAmount)
         {
-            Debug.Log("in while");
-
             coins = PhotonNetwork.PhotonViews.Where(c => c.gameObject.tag == "Coin").ToList();
-            Debug.Log("coins count: " + coins.Count);
-
             yield return null;
         }
-        Debug.Log("after while");
 
         foreach (var coin in coins)
         {
-            coin.gameObject.GetComponent<Coin>().OnCoinCollected += coinBar.CoinCollected;
+            coin.gameObject.GetComponent<CoinController>().OnCoinCollected += coinBar.CoinCollected;
         }
     }
 
@@ -62,7 +56,6 @@ public class CoinSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         PhotonNetwork.Destroy(coin);
-        Debug.Log("Destroy coin");
     }
 
     private void SpawnCoins()
@@ -71,10 +64,9 @@ public class CoinSpawner : MonoBehaviour
         {
             randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
             GameObject coinGameObject = PhotonNetwork.Instantiate(coinPrefab.name, randomPosition, Quaternion.identity);
-            Coin coin = coinGameObject.GetComponent<Coin>();
+            CoinController coin = coinGameObject.GetComponent<CoinController>();
             coin.OnCoinCollected += coinBar.CoinCollected;
             coin.OnDestroyCoin += DestroyCoin;
         }
     }
-
 }

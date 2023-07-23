@@ -8,8 +8,8 @@ public class SpawnPlayers : MonoBehaviour
     [SerializeField] private float minY;
     [SerializeField] private float maxX;
     [SerializeField] private float maxY;
-    [SerializeField] private JoystickController2 joystickController2;
-    [SerializeField] private Shoot shoot;
+    [SerializeField] private JoystickController joystickController;
+    [SerializeField] private ShootController shootController;
 
     private PlayerController playerController;
     void Start()
@@ -17,8 +17,6 @@ public class SpawnPlayers : MonoBehaviour
         Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
         playerController = player.GetComponent<PlayerController>();
-        playerController.Initialize(joystickController2, shoot);
-    }
-
-    
+        playerController.Initialize(joystickController, shootController);
+    }    
 }

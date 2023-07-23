@@ -9,13 +9,11 @@ public class RigidBodyLagCompensation : MonoBehaviourPun, IPunObservable
     {
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 30;
-
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
         if (stream.IsWriting)
         {
             stream.SendNext(rigidbody.position);
@@ -31,7 +29,5 @@ public class RigidBodyLagCompensation : MonoBehaviourPun, IPunObservable
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             rigidbody.position += rigidbody.velocity * lag;
         }
-
     }
-
 }
