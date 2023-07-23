@@ -15,18 +15,11 @@ public class RigidBodyLagCompensation : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(rigidbody.position);
             stream.SendNext(rigidbody.rotation);
-            stream.SendNext(rigidbody.velocity);
         }
         else
         {
-            rigidbody.position = (Vector2)stream.ReceiveNext();
             rigidbody.rotation = (float)stream.ReceiveNext();
-            rigidbody.velocity = (Vector2)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            rigidbody.position += rigidbody.velocity * lag;
         }
     }
 }

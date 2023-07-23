@@ -7,6 +7,8 @@ TagManager:
   - JoystickBG
   - ShootButton
   - Bullet
+  - Coin
+  - Health
   layers:
   - Default
   - TransparentFX
