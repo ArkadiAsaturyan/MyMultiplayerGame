@@ -104,6 +104,7 @@ MonoBehaviour:
   rigidbody2D: {fileID: -9062965400009668499}
   speed: 800
   sprite: {fileID: 8153519230583152118}
+  photonView: {fileID: 685277711411205648}
 --- !u!50 &-9062965400009668499
 Rigidbody2D:
   serializedVersion: 4

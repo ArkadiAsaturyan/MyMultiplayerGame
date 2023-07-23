@@ -7,15 +7,10 @@ public class BulletController : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidbody2D;
     [SerializeField] private float speed;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private PhotonView photonView;
 
-    private PhotonView photonView;
     private bool isInactive;
     public bool IsInactive => isInactive;
-
-    private void Awake()
-    {
-        photonView = GetComponent<PhotonView>();
-    }
 
     private IEnumerator DestroyBullet()
     {

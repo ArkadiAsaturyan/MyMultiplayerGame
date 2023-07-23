@@ -15,6 +15,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bulletOfset;
     [SerializeField] private HealthBar healthBarPrefab;
     [SerializeField] private Vector3 healthBarOffset;
+    [SerializeField] private PhotonView photonView;
+
+    private Color[] colors = { Color.white, Color.magenta, Color.red, Color.black, Color.yellow };
+    private JoystickController _joystickController2;
+    private ShootController _shootController;
+    private Vector2 playerDirection = Vector2.zero;
+    public Vector2 PlayerDirection => playerDirection;
+    private HealthBar healthManager;
 
     public event Action<PlayerController> OnPlayerDestroyed;
     private string name;
@@ -22,6 +30,17 @@ public class PlayerController : MonoBehaviour
 
     private int collectedCoins;
     public int CollectedCoins => collectedCoins;
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            GameObject healthBarGameObject = PhotonNetwork.Instantiate(healthBarPrefab.gameObject.name,
+                transform.position + healthBarOffset, Quaternion.identity);
+            healthManager = healthBarGameObject.GetComponent<HealthBar>();
+            healthManager.Initialize(transform);
+        }
+    }
 
     void Start()
     {
@@ -40,33 +59,13 @@ public class PlayerController : MonoBehaviour
         collectedCoins++;
     }
 
-    private Color[] colors = { Color.white, Color.magenta, Color.red, Color.black, Color.yellow };
-    private JoystickController _joystickController2;
-    private ShootController _shootController;
-    private PhotonView photonView;
-    private Vector2 playerDirection = Vector2.zero;
-    public Vector2 PlayerDirection => playerDirection;
-    private HealthBar healthManager;
-
-    private void Awake()
-    {
-        photonView = GetComponent<PhotonView>();
-        if (photonView.IsMine)
-        {
-            GameObject healthBarGameObject = PhotonNetwork.Instantiate(healthBarPrefab.gameObject.name,
-                transform.position + healthBarOffset, Quaternion.identity);
-            healthManager = healthBarGameObject.GetComponent<HealthBar>();
-            healthManager.Initialize(transform);
-        }
-    }
-
     private IEnumerator FindHealthBar()
     {
         while (healthManager == null)
         {
             var healthBarPhotonView = PhotonNetwork.PhotonViews
                 .Where(v => v.CreatorActorNr == photonView.CreatorActorNr 
-                && v.TryGetComponent<HealthBar>(out HealthBar health)).FirstOrDefault();
+                && v.gameObject.tag == "Health").FirstOrDefault();
 
             if (healthBarPhotonView != null)
             {

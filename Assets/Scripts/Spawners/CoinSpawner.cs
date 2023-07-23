@@ -25,7 +25,6 @@ public class CoinSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("PhotonNetwork.IsMasterClient else");
             StartCoroutine(SubscribeEventForNonMasterClientCoroutine());
         }
     }

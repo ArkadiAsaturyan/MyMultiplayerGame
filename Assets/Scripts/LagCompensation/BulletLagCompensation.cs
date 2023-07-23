@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BulletLagCompensation : MonoBehaviour, IPunObservable
 {
-    [SerializeField] Rigidbody2D rigidbody;
+    [SerializeField] private Rigidbody2D rigidbody;
 
     private PhotonView photonView;
     private Vector2 networkPosition;

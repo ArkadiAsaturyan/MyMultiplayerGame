@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e6a8da8120b86d4abcded4d81516908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: -6268492793624952750}
 --- !u!114 &9076806075157155405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,3 +291,4 @@ MonoBehaviour:
   bulletOfset: 0.15
   healthBarPrefab: {fileID: 5553751570603638011, guid: bb9a3a763b4411a4a91859d01d58f9ea, type: 3}
   healthBarOffset: {x: 0, y: -0.7, z: 0}
+  photonView: {fileID: -7260889718417511526}

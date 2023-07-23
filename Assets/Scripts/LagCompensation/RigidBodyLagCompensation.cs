@@ -3,13 +3,12 @@ using Photon.Pun;
 
 public class RigidBodyLagCompensation : MonoBehaviourPun, IPunObservable
 {
-    private Rigidbody2D rigidbody;
+    [SerializeField] private Rigidbody2D rigidbody;
 
     private void Awake()
     {
         PhotonNetwork.SendRate = 30;
         PhotonNetwork.SerializationRate = 30;
-        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
