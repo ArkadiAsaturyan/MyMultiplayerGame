@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using WebSocketSharp;
 
 namespace Assets
 {
@@ -17,11 +18,19 @@ namespace Assets
        
         public void CreateRoom()
         {
+            if(nameInputField.text == "" || createInputField.text == "")
+            {
+                return;
+            }
             PhotonNetwork.CreateRoom(createInputField.text);
         }
 
         public void JoinRoom()
         {
+            if (nameInputField.text == "" || joinInputField.text == "")
+            {
+                return;
+            }
             PhotonNetwork.JoinRoom(joinInputField.text);
         }
 
