@@ -21,7 +21,10 @@ public class CoinController : MonoBehaviour
         {
             gameObject.SetActive(false);
             OnCoinCollected(collision);
-            OnDestroyCoin(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                OnDestroyCoin(gameObject);
+            }
         }
     }
 }
