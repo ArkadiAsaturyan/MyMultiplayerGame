@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private HealthBar healthBarPrefab;
     [SerializeField] private Vector3 healthBarOffset;
     [SerializeField] private PhotonView photonView;
+    [SerializeField] private Rigidbody2D rigidbody2D;
+
 
     private Color[] colors = { Color.green, Color.red, Color.magenta, Color.yellow, Color.black, Color.white };
     private JoystickController _joystickController2;
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        
         spriteRenderer.color = colors[colorConfig.PlayerIndex];
         colorConfig.IncrementPlayerIndex();
 
@@ -54,6 +57,14 @@ public class PlayerController : MonoBehaviour
         name = photonView.Owner.NickName;
     }
 
+    private void MovePlayer()
+    {
+        if (photonView.IsMine)
+        {
+            MoveForDrag();
+        }
+    }
+    
     private void AddPoint()
     {
         collectedCoins++;
@@ -85,6 +96,9 @@ public class PlayerController : MonoBehaviour
         _joystickController2 = joystickController2;
         _shootController = shootController;
         _shootController.OnShoot += Shoot;
+        _joystickController2.OnDragDetected += MovePlayer;
+        _joystickController2.OnDragEnd += StopMove;
+
     }
 
     public void Initialize(JoystickController joystickController2, ShootController shootController)
@@ -170,7 +184,12 @@ public class PlayerController : MonoBehaviour
                 );
     }
 
-    public void Move()
+    private void StopMove()
+    {
+        rigidbody2D.velocity = Vector2.zero;
+    }
+    
+    private void Move()
     {
         if (_joystickController2 != null && _joystickController2.InputDirection != Vector2.zero)
         {
@@ -187,12 +206,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void MoveForDrag()
+    {
+        if (_joystickController2 != null && _joystickController2.InputDirection != Vector2.zero)
+        {
+            RotatePlayer();
+            if ((transform.position.y < -4.1f && _joystickController2.InputDirection.y < 0)
+                || (transform.position.y > 4.1f && _joystickController2.InputDirection.y > 0)
+                || (transform.position.x < -7.6f && _joystickController2.InputDirection.x < 0)
+                || (transform.position.x > 7.6f && _joystickController2.InputDirection.x > 0))
+            {
+                return;
+            }
+            
+            rigidbody2D.velocity = _joystickController2.InputDirection * m_Speed;
+        }
+    }
+    
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            Move();
-        }
+        //Debug.LogError("Update");
+        // if (photonView.IsMine)
+        // {
+        //     Move();
+        // }
     }
 
     private void OnDestroy()

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,6 +9,10 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     [SerializeField] Image joystickImage;
     [SerializeField] float offset;
 
+    public event Action OnDragDetected;
+    public event Action OnDragEnd;
+
+    
     private Vector2 inputDirection = Vector2.right;
     public Vector2 InputDirection => inputDirection;
 
@@ -18,6 +23,9 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
 
     public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("OnDrag");
+        OnDragDetected.Invoke();
+        
         Vector2 pos = Vector2.zero;
         float bgImageSizeX = bgImage.rectTransform.sizeDelta.x;
         float bgImageSizeY = bgImage.rectTransform.sizeDelta.y;
@@ -43,5 +51,6 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     {
          inputDirection = Vector2.zero;
         joystickImage.rectTransform.anchoredPosition = Vector2.zero;
+        OnDragEnd.Invoke();
     }    
 }
