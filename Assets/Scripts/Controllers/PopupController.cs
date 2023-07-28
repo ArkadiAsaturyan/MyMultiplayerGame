@@ -21,9 +21,15 @@ public class PopupController : MonoBehaviour
         playersCount--;
         if(players.Count == 1)
         {
-            winnerPopup.gameObject.SetActive(true);
-            winnerPopup.Setup(players[0].Name, players[0].CollectedCoins);            
+            StartCoroutine(ShowWinnerPopup());
         }
+    }
+
+    private IEnumerator ShowWinnerPopup()
+    {
+        yield return new WaitForSeconds(1);
+        winnerPopup.gameObject.SetActive(true);
+        winnerPopup.Setup(players[0].Name, players[0].CollectedCoins);
     }
     
     private IEnumerator CheckPhotonViews()
