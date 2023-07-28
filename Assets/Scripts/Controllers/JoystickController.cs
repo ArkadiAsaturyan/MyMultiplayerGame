@@ -11,6 +11,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
 
     public event Action OnDragDetected;
     public event Action OnDragEnd;
+    public event Action OnDragStart;
 
     
     private Vector2 inputDirection = Vector2.right;
@@ -45,6 +46,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        OnDragStart.Invoke();
     }
 
     public void OnPointerUp(PointerEventData eventData)

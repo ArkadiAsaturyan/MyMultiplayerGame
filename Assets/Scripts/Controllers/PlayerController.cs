@@ -96,9 +96,9 @@ public class PlayerController : MonoBehaviour
         _joystickController2 = joystickController2;
         _shootController = shootController;
         _shootController.OnShoot += Shoot;
+        _joystickController2.OnDragStart += MovePlayer;
         _joystickController2.OnDragDetected += MovePlayer;
         _joystickController2.OnDragEnd += StopMove;
-
     }
 
     public void Initialize(JoystickController joystickController2, ShootController shootController)
