@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: -6268492793624952750}
   - component: {fileID: 6233055462534995184}
   - component: {fileID: -7260889718417511526}
-  - component: {fileID: 6073652539085836598}
   - component: {fileID: 9076806075157155405}
-  - component: {fileID: -7749383482848906676}
+  - component: {fileID: -7978613189659790233}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -255,24 +254,10 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6073652539085836598}
-  - {fileID: -7749383482848906676}
+  - {fileID: -7978613189659790233}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6073652539085836598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9166271157020718130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e6a8da8120b86d4abcded4d81516908, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: -6268492793624952750}
 --- !u!114 &9076806075157155405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,7 +279,7 @@ MonoBehaviour:
   healthBarPrefab: {fileID: 5553751570603638011, guid: bb9a3a763b4411a4a91859d01d58f9ea, type: 3}
   healthBarOffset: {x: 0, y: -0.7, z: 0}
   photonView: {fileID: -7260889718417511526}
---- !u!114 &-7749383482848906676
+--- !u!114 &-7978613189659790233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,27 +288,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9166271157020718130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Script: {fileID: 11500000, guid: fc923691bafd4469a07b68a1f19ab705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+  smoothPos: 0.5

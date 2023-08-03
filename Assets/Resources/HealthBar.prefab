@@ -87,8 +87,8 @@ GameObject:
   - component: {fileID: 3259168016356855024}
   - component: {fileID: 1529413050863737649}
   - component: {fileID: 4185659679239420914}
-  - component: {fileID: 490587460165514384}
   - component: {fileID: 5553751570603638011}
+  - component: {fileID: 6773123713952344317}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Health
@@ -159,44 +159,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 490587460165514384}
   - {fileID: 5553751570603638011}
+  - {fileID: 6773123713952344317}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &490587460165514384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3172597115974925742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
 --- !u!114 &5553751570603638011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +180,19 @@ MonoBehaviour:
   healthText: {fileID: 4600300279347084369}
   rectTransform: {fileID: 3259168016356855024}
   photonView: {fileID: 4185659679239420914}
+--- !u!114 &6773123713952344317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3172597115974925742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc923691bafd4469a07b68a1f19ab705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothPos: 0.5
 --- !u!1 &4827082747953179039
 GameObject:
   m_ObjectHideFlags: 0
