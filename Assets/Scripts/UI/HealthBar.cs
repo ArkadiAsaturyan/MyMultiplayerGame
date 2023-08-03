@@ -7,8 +7,6 @@ public class HealthBar : MonoBehaviour, IPunObservable
 {
     [SerializeField] private Image healthBar;
     [SerializeField] private TextMeshProUGUI healthText;
-    [SerializeField] private RectTransform rectTransform;
-    [SerializeField] private PhotonView photonView;
 
     private float startingHealth = 500f;
     private float currentHealth = 500f;

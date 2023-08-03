@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1529413050863737649}
   - component: {fileID: 4185659679239420914}
   - component: {fileID: 5553751570603638011}
-  - component: {fileID: 6773123713952344317}
+  - component: {fileID: -4755718365540544348}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Health
@@ -160,7 +160,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5553751570603638011}
-  - {fileID: 6773123713952344317}
+  - {fileID: -4755718365540544348}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -178,9 +178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2763380385953404501}
   healthText: {fileID: 4600300279347084369}
-  rectTransform: {fileID: 3259168016356855024}
-  photonView: {fileID: 4185659679239420914}
---- !u!114 &6773123713952344317
+--- !u!114 &-4755718365540544348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,7 +187,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3172597115974925742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc923691bafd4469a07b68a1f19ab705, type: 3}
+  m_Script: {fileID: 11500000, guid: 28fda316c5b04c12a0ea2879d8296fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   smoothPos: 0.5
