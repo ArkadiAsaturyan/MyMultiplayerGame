@@ -223,14 +223,14 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    void Update()
-    {
-        //Debug.LogError("Update");
-        // if (photonView.IsMine)
-        // {
-        //     Move();
-        // }
-    }
+    // void Update()
+    // {
+    //     Debug.LogError("Update");
+    //      if (photonView.IsMine)
+    //      {
+    //          Move();
+    //      }
+    // }
 
     private void OnDestroy()
     {
