@@ -42,12 +42,16 @@ public class HealthBar : MonoBehaviour, IPunObservable
         }
     }
 
-    public void SetHealthForOpponent()
+    private void SetHealthForOpponent()
     {
         float differenceInPercent = (previousHealth - currentHealth) / startingHealth;
         healthBar.fillAmount -= differenceInPercent;
         healthText.text = $"{currentHealth}";
         previousHealth = currentHealth;
+        if (currentHealth <= 50)
+        {
+            healthBar.color = Color.red;
+        }
     }
 
     public void SetHealth()
@@ -55,6 +59,10 @@ public class HealthBar : MonoBehaviour, IPunObservable
         healthBar.fillAmount -= 0.02f;
         currentHealth -= 10;
         healthText.text = $"{currentHealth}";
+        if (currentHealth <= 50)
+        {
+            healthBar.color = Color.red;
+        }
     }
 
     private void Update()
