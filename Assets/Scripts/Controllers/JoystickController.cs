@@ -25,7 +25,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     public void OnDrag(PointerEventData eventData)
     {
         Debug.Log("OnDrag");
-        OnDragDetected.Invoke();
+        OnDragDetected?.Invoke();
         
         Vector2 pos = Vector2.zero;
         float bgImageSizeX = bgImage.rectTransform.sizeDelta.x;
@@ -46,13 +46,13 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandl
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
-        OnDragStart.Invoke();
+        OnDragStart?.Invoke();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
          inputDirection = Vector2.zero;
         joystickImage.rectTransform.anchoredPosition = Vector2.zero;
-        OnDragEnd.Invoke();
+        OnDragEnd?.Invoke();
     }    
 }
