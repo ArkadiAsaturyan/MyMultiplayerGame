@@ -1,53 +1,55 @@
-using Photon.Pun;
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+namespace Controllers
 {
-    [SerializeField] private Rigidbody2D rigidbody2D;
-    [SerializeField] private float speed;
-    [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private PhotonView photonView;
-
-    private bool isInactive;
-    public bool IsInactive => isInactive;
-
-    private IEnumerator DestroyBullet()
+    public class BulletController : MonoBehaviour
     {
-        yield return new WaitForSeconds(0.5f);
-        PhotonNetwork.Destroy(gameObject);
-    }
+        [SerializeField] private Rigidbody2D rigidbody2D;
+        [SerializeField] private float speed;
+        [SerializeField] private SpriteRenderer sprite;
+        [SerializeField] private PhotonView photonView;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Bullet" || collision.tag == "Coin" 
-            || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
+        public bool IsInactive { get; private set; }
+
+        private IEnumerator DestroyBullet()
         {
-            return;
+            yield return new WaitForSeconds(0.5f);
+            PhotonNetwork.Destroy(gameObject);
         }
 
-        if (photonView.IsMine)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            StartCoroutine(DestroyBullet());
-        }
-        sprite.enabled = false;
-    }
+            if (collision.CompareTag("Bullet") || collision.CompareTag("Coin") 
+                                               || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
+            {
+                return;
+            }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "Bullet" || collision.tag == "Coin"
-            || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
-        {
-            return;
+            if (photonView.IsMine)
+            {
+                StartCoroutine(DestroyBullet());
+            }
+            sprite.enabled = false;
         }
-        isInactive = true;
-    }
 
-    public void Shoot(Vector2 direction)
-    {
-        if (direction != Vector2.zero)
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            rigidbody2D.AddForce(direction * speed);
+            if (collision.CompareTag("Bullet") || collision.CompareTag("Coin")
+                                               || (collision.gameObject.GetComponent<PhotonView>().Owner == photonView.Owner))
+            {
+                return;
+            }
+            IsInactive = true;
+        }
+
+        public void Shoot(Vector2 direction)
+        {
+            if (direction != Vector2.zero)
+            {
+                rigidbody2D.AddForce(direction * speed);
+            }
         }
     }
 }

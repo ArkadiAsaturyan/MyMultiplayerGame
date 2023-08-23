@@ -1,51 +1,56 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-public class PopupController : MonoBehaviour
+using Photon.Pun;
+using UI;
+using UnityEngine;
+
+namespace Controllers
 {
-    [SerializeField] private WinnerPopup winnerPopup;
-
-    private int playersCount;
-    private List<PlayerController> players;
-
-    private void Awake()
+    public class PopupController : MonoBehaviour
     {
-        StartCoroutine(CheckPhotonViews());
-    }
+        [SerializeField] private WinnerPopup winnerPopup;
 
-    private void PlayerDestroyed(PlayerController player)
-    {
-        players.Remove(player);
-        playersCount--;
-        if(players.Count == 1)
+        private int _playersCount;
+        private List<PlayerController> _players;
+
+        private void Awake()
         {
-            StartCoroutine(ShowWinnerPopup());
+            StartCoroutine(CheckPhotonViews());
         }
-    }
 
-    private IEnumerator ShowWinnerPopup()
-    {
-        yield return new WaitForSeconds(1);
-        winnerPopup.gameObject.SetActive(true);
-        winnerPopup.Setup(players[0].Name, players[0].CollectedCoins);
-    }
-    
-    private IEnumerator CheckPhotonViews()
-    {
-        while (true)
+        private void PlayerDestroyed(PlayerController player)
+        {
+            _players.Remove(player);
+            _playersCount--;
+            if(_players.Count == 1)
+            {
+                StartCoroutine(ShowWinnerPopup());
+            }
+        }
+
+        private IEnumerator ShowWinnerPopup()
         {
             yield return new WaitForSeconds(1);
-
-            players = PhotonNetwork.PhotonViews
-            .Where(x => x.gameObject.tag == "Player")
-            .Select(p => p.GetComponent<PlayerController>()).ToList();
-
-            if (players.Count >= playersCount + 1)
+            winnerPopup.gameObject.SetActive(true);
+            winnerPopup.Setup(_players[0].Name, _players[0].CollectedCoins);
+        }
+    
+        private IEnumerator CheckPhotonViews()
+        {
+            while (true)
             {
-                players[playersCount].OnPlayerDestroyed += PlayerDestroyed;
-                playersCount++;
+                yield return new WaitForSeconds(1);
+
+                _players = PhotonNetwork.PhotonViews
+                    .Where(x => x.gameObject.CompareTag("Player"))
+                    .Select(p => p.GetComponent<PlayerController>()).ToList();
+
+                if (_players.Count >= _playersCount + 1)
+                {
+                    _players[_playersCount].OnPlayerDestroyed += PlayerDestroyed;
+                    _playersCount++;
+                }
             }
         }
     }

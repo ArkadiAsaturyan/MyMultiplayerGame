@@ -1,14 +1,17 @@
 using TMPro;
 using UnityEngine;
 
-public class WinnerPopup : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TextMeshProUGUI winnerName;
-    [SerializeField] private TextMeshProUGUI collectedCoins;
-
-    public void Setup(string name, int coins)
+    public class WinnerPopup : MonoBehaviour
     {
-        winnerName.text = $"{name} Wins!";
-        collectedCoins.text = $"Collected Coins: {coins}";
+        [SerializeField] private TextMeshProUGUI winnerName;
+        [SerializeField] private TextMeshProUGUI collectedCoins;
+
+        public void Setup(string name, int coins)
+        {
+            winnerName.text = $"{name} Wins!";
+            collectedCoins.text = $"Collected Coins: {coins}";
+        }
     }
 }

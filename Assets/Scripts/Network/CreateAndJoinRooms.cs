@@ -2,9 +2,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using WebSocketSharp;
 
-namespace Assets
+namespace Network
 {
     public class CreateAndJoinRooms : MonoBehaviourPunCallbacks
     {

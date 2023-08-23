@@ -2,46 +2,50 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
+namespace Controllers
 {
-    [SerializeField] Image bgImage;
-    [SerializeField] Image joystickImage;
-    [SerializeField] float offset;
-
-    private Vector2 inputDirection = Vector2.right;
-    public Vector2 InputDirection => inputDirection;
-
-    void Start()
+    public class JoystickController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {
-        inputDirection = Vector2.zero;
-    }
+        [SerializeField] private Image bgImage;
+        [SerializeField] private Image joystickImage;
+        [SerializeField] private float offset;
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        Vector2 pos = Vector2.zero;
-        float bgImageSizeX = bgImage.rectTransform.sizeDelta.x;
-        float bgImageSizeY = bgImage.rectTransform.sizeDelta.y;
+        private Vector2 _inputDirection = Vector2.right;
+        public Vector2 InputDirection => _inputDirection;
 
-        if(RectTransformUtility.ScreenPointToLocalPointInRectangle
-            (bgImage.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
+        private void Start()
         {
-            pos.x /= bgImageSizeX; 
-            pos.y /= bgImageSizeY;
-            inputDirection = new Vector2(pos.x, pos.y);
-            inputDirection = inputDirection.magnitude > 1 ? inputDirection.normalized : inputDirection;
-            joystickImage.rectTransform.anchoredPosition 
-                = new Vector2(inputDirection.x*(bgImageSizeX/offset), inputDirection.y*(bgImageSizeY/offset));
+            _inputDirection = Vector2.zero;
         }
-    }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        OnDrag(eventData);
-    }
+        public void OnDrag(PointerEventData eventData)
+        {
+            Vector2 pos = Vector2.zero;
+            var sizeDelta = bgImage.rectTransform.sizeDelta;
+            float bgImageSizeX = sizeDelta.x;
+            float bgImageSizeY = sizeDelta.y;
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-         inputDirection = Vector2.zero;
-        joystickImage.rectTransform.anchoredPosition = Vector2.zero;
-    }    
+            if(RectTransformUtility.ScreenPointToLocalPointInRectangle
+                   (bgImage.rectTransform, eventData.position, eventData.pressEventCamera, out pos))
+            {
+                pos.x /= bgImageSizeX; 
+                pos.y /= bgImageSizeY;
+                _inputDirection = new Vector2(pos.x, pos.y);
+                _inputDirection = _inputDirection.magnitude > 1 ? _inputDirection.normalized : _inputDirection;
+                joystickImage.rectTransform.anchoredPosition 
+                    = new Vector2(_inputDirection.x*(bgImageSizeX/offset), _inputDirection.y*(bgImageSizeY/offset));
+            }
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnDrag(eventData);
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            _inputDirection = Vector2.zero;
+            joystickImage.rectTransform.anchoredPosition = Vector2.zero;
+        }    
+    }
 }

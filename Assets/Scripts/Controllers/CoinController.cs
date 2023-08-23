@@ -1,29 +1,27 @@
-using Photon.Pun;
 using System;
-using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 
-public class CoinController : MonoBehaviour
+namespace Controllers
 {
-    [SerializeField] private SpriteRenderer spriteRenderer;
-
-    public event Action<Collider2D> OnCoinCollected;
-    public event Action<GameObject> OnDestroyCoin;
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public class CoinController : MonoBehaviour
     {
-        if(collision.tag == "Bullet")
-        {
-            return;
-        }
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
-        if(collision.gameObject.tag == "Player")
+        public event Action<Collider2D> OnCoinCollected;
+        public event Action<GameObject> OnDestroyCoin;
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (!collision.gameObject.CompareTag("Player"))
+            {
+                return;
+            }
             gameObject.SetActive(false);
-            OnCoinCollected(collision);
+            OnCoinCollected?.Invoke(collision);
             if (PhotonNetwork.IsMasterClient)
             {
-                OnDestroyCoin(gameObject);
+                OnDestroyCoin?.Invoke(gameObject);
             }
         }
     }

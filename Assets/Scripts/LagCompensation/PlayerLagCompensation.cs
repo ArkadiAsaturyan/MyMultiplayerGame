@@ -7,20 +7,21 @@ namespace LagCompensation
 {
     public class PlayerLagCompensation : MonoBehaviourPun, IPunObservable
     {
-        private Vector2 latestPos;
-        private Quaternion latestRot;
-        private float currentTime = 0;
-        private double currentPacketTime = 0;
-        private double lastPacketTime = 0;
-        private Vector2 positionAtLastPacket = Vector3.zero;
-        private Quaternion rotationAtLastPacket = quaternion.identity;
-
+        private Vector2 _latestPos;
+        private Quaternion _latestRot;
+        private float _currentTime = 0;
+        private double _currentPacketTime = 0;
+        private double _lastPacketTime = 0;
+        private Vector2 _positionAtLastPacket = Vector3.zero;
+        private Quaternion _rotationAtLastPacket = quaternion.identity;
+        private Transform _transform1;
         public float smoothPos = 0.5f;
 
         private void Awake()
         {
             PhotonNetwork.SendRate = 30;
             PhotonNetwork.SerializationRate = 30;
+            _transform1 = transform;
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -32,14 +33,14 @@ namespace LagCompensation
             }
             else
             {
-                latestPos = (Vector3)stream.ReceiveNext();
-                latestRot = (Quaternion)stream.ReceiveNext();
+                _latestPos = (Vector3)stream.ReceiveNext();
+                _latestRot = (Quaternion)stream.ReceiveNext();
 
-                currentTime = 0.0f;
-                lastPacketTime = currentPacketTime;
-                currentPacketTime = info.SentServerTime;
-                positionAtLastPacket = transform.position;
-                rotationAtLastPacket = transform.rotation;
+                _currentTime = 0.0f;
+                _lastPacketTime = _currentPacketTime;
+                _currentPacketTime = info.SentServerTime;
+                _positionAtLastPacket = _transform1.position;
+                _rotationAtLastPacket = _transform1.rotation;
             }
         }
 
@@ -50,10 +51,10 @@ namespace LagCompensation
                 return;
             }
 
-            double timeToReachGoal = currentPacketTime - lastPacketTime;
-            currentTime += Time.fixedDeltaTime;
-            transform.position = Vector3.Lerp(positionAtLastPacket, latestPos, (float)(currentTime / timeToReachGoal));
-            transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, (float)(currentTime / timeToReachGoal));
+            double timeToReachGoal = _currentPacketTime - _lastPacketTime;
+            _currentTime += Time.fixedDeltaTime;
+            transform.position = Vector3.Lerp(_positionAtLastPacket, _latestPos, (float)(_currentTime / timeToReachGoal));
+            transform.rotation = Quaternion.Lerp(_rotationAtLastPacket, _latestRot, (float)(_currentTime / timeToReachGoal));
 
         }
     }

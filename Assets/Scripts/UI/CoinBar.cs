@@ -1,29 +1,33 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class CoinBar : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private Image progress;
-    [SerializeField] private TextMeshProUGUI collectedCoinsTexr;
-    [SerializeField] private float coinsAmount;
-
-    private float oneCoinProgress;
-
-    private void Start()
+    public class CoinBar : MonoBehaviour
     {
-        oneCoinProgress = 1f / coinsAmount;
-    }
+        [SerializeField] private Image progress;
+        [SerializeField] private TextMeshProUGUI collectedCoinsText;
+        [SerializeField] private float coinsAmount;
 
-    private int collectedCoins;
-    public void CoinCollected(Collider2D collision)
-    {
-        if(collision.gameObject.GetComponent<PhotonView>().IsMine)
+        private float _oneCoinProgress;
+
+        private void Start()
         {
-            collectedCoins++;
-            collectedCoinsTexr.text = $"{collectedCoins}";
-            progress.fillAmount += oneCoinProgress;
+            _oneCoinProgress = 1f / coinsAmount;
+        }
+
+        private int _collectedCoins;
+        public void CoinCollected(Collider2D collision)
+        {
+            if(collision.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                _collectedCoins++;
+                collectedCoinsText.text = $"{_collectedCoins}";
+                progress.fillAmount += _oneCoinProgress;
+            }
         }
     }
 }

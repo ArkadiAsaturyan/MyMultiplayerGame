@@ -2,11 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ShootController : MonoBehaviour, IPointerDownHandler
+namespace Controllers
 {
-    public event Action OnShoot;
-    public void OnPointerDown(PointerEventData eventData)
+    public class ShootController : MonoBehaviour, IPointerDownHandler
     {
-        OnShoot?.Invoke();
+        public event Action OnShoot;
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnShoot?.Invoke();
+        }
     }
 }

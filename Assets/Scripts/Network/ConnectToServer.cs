@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine.SceneManagement;
 
-namespace Assets
+namespace Network
 {
     public class ConnectToServer : MonoBehaviourPunCallbacks
     {

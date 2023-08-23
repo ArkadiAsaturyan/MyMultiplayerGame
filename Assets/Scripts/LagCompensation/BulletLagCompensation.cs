@@ -1,42 +1,45 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class BulletLagCompensation : MonoBehaviour, IPunObservable
+namespace LagCompensation
 {
-    [SerializeField] private Rigidbody2D rigidbody;
-
-    private PhotonView photonView;
-    private Vector2 networkPosition;
-
-    private void Awake()
+    public class BulletLagCompensation : MonoBehaviour, IPunObservable
     {
-        PhotonNetwork.SendRate = 30;
-        PhotonNetwork.SerializationRate = 30;
-        photonView = GetComponent<PhotonView>();
-    }
+        [SerializeField] private Rigidbody2D rigidbody;
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
+        private PhotonView _photonView;
+        private Vector2 _networkPosition;
+
+        private void Awake()
         {
-            stream.SendNext(rigidbody.position);
-            stream.SendNext(rigidbody.velocity);
+            PhotonNetwork.SendRate = 30;
+            PhotonNetwork.SerializationRate = 30;
+            _photonView = GetComponent<PhotonView>();
         }
-        else
-        {
-            networkPosition = (Vector2)stream.ReceiveNext();
-            rigidbody.velocity = (Vector2)stream.ReceiveNext();
 
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            networkPosition += rigidbody.velocity * lag;
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(rigidbody.position);
+                stream.SendNext(rigidbody.velocity);
+            }
+            else
+            {
+                _networkPosition = (Vector2)stream.ReceiveNext();
+                rigidbody.velocity = (Vector2)stream.ReceiveNext();
+
+                float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+                _networkPosition += rigidbody.velocity * lag;
+            }
         }
-    }
 
-    public void FixedUpdate()
-    {
-        if (!photonView.IsMine)
+        public void FixedUpdate()
         {
-            rigidbody.position = Vector3.MoveTowards(rigidbody.position, networkPosition, Time.fixedDeltaTime);
+            if (!_photonView.IsMine)
+            {
+                rigidbody.position = Vector3.MoveTowards(rigidbody.position, _networkPosition, Time.fixedDeltaTime);
+            }
         }
     }
 }

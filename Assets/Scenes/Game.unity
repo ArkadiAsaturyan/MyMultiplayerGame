@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progress: {fileID: 1532544171}
-  collectedCoinsTexr: {fileID: 735473538}
+  collectedCoinsText: {fileID: 735473538}
   coinsAmount: 15
 --- !u!1 &1234565954
 GameObject:

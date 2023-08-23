@@ -6,11 +6,11 @@ namespace LagCompensation
 {
     public class HealthBarLagCompensation : MonoBehaviourPun, IPunObservable
     {
-        private Vector2 latestPos;
-        private float currentTime = 0;
-        private double currentPacketTime = 0;
-        private double lastPacketTime = 0;
-        private Vector2 positionAtLastPacket = Vector3.zero;
+        private Vector2 _latestPos;
+        private float _currentTime = 0;
+        private double _currentPacketTime = 0;
+        private double _lastPacketTime = 0;
+        private Vector2 _positionAtLastPacket = Vector3.zero;
 
         public float smoothPos = 0.5f;
 
@@ -28,12 +28,12 @@ namespace LagCompensation
             }
             else
             {
-                latestPos = (Vector3)stream.ReceiveNext();
+                _latestPos = (Vector3)stream.ReceiveNext();
 
-                currentTime = 0.0f;
-                lastPacketTime = currentPacketTime;
-                currentPacketTime = info.SentServerTime;
-                positionAtLastPacket = transform.position;
+                _currentTime = 0.0f;
+                _lastPacketTime = _currentPacketTime;
+                _currentPacketTime = info.SentServerTime;
+                _positionAtLastPacket = transform.position;
             }
         }
 
@@ -44,9 +44,9 @@ namespace LagCompensation
                 return;
             }
 
-            double timeToReachGoal = currentPacketTime - lastPacketTime;
-            currentTime += Time.fixedDeltaTime;
-            transform.position = Vector3.Lerp(positionAtLastPacket, latestPos, (float)(currentTime / timeToReachGoal));
+            double timeToReachGoal = _currentPacketTime - _lastPacketTime;
+            _currentTime += Time.fixedDeltaTime;
+            transform.position = Vector3.Lerp(_positionAtLastPacket, _latestPos, (float)(_currentTime / timeToReachGoal));
         }
     }
 }
